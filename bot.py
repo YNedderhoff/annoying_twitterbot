@@ -21,26 +21,32 @@ class StdOutListener(tweepy.StreamListener):
 		data = json.loads(data)
 		username = data.get('user').get('screen_name')
 		text = data.get('text')
-		if random.randint(0, 10) == 4:
-			if text.lower().startswith('wenn'):
-				new_status = random.choice(replies_list_wenn)
+		if random.randint(0, 10) != 11:
+			if text.lower().startswith('wenn') and not text.lower().endswith('?'):
+				"""new_status = random.choice(replies_list_wenn)
 				while new_status == self.last_own_tweet:
 					new_status = random.choice(replies_list_wenn)
 				last_own_tweet = new_status
 				print "Tweet: "+text
 				print "Answer: "+last_own_tweet
-				api.update_status(status='@%s %s' % (data.get('user').get('screen_name'), last_own_tweet), in_reply_to_status_id=data.get('id'))
-			elif text.lower().startswith(u'hätte'):
+				#api.update_status(status='@%s %s' % (data.get('user').get('screen_name'), last_own_tweet), in_reply_to_status_id=data.get('id'))"""
+				return
+			elif text.lower().startswith(u'hätte') and not text.lower().endswith('?'):
+				print "Hahahahahahahaha"
 				new_status = random.choice(replies_list_haette)
 				while new_status == self.last_own_tweet:
 					new_status = random.choice(replies_list_haette)
+					print "Tweet: "+text
+					print "Answer: - no answer -"
 				last_own_tweet = new_status
 				print "Tweet: "+text
 				print "Answer: "+last_own_tweet
-				api.update_status(status='@%s %s' % (data.get('user').get('screen_name'), last_own_tweet), in_reply_to_status_id=data.get('id'))
+				#api.update_status(status='@%s %s' % (data.get('user').get('screen_name'), last_own_tweet), in_reply_to_status_id=data.get('id'))
+			elif u'büro' in text.lower() and 'hund' in text.lower():
+				print "Tweet: "+text
+				print 'Anser: \'N Hund im Bürooo?'
 		else:
-			print "Tweet: "+text
-			print "--> Der Zufall wollte nicht antworten ..."""
+			print "Zufall sagt Nein."
 		return True
 
 	def on_error(self, status):
@@ -52,7 +58,7 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
 
     stream = tweepy.Stream(auth, l)
-    stream.filter(track=['Wenn', u'Hätte'],
+    stream.filter(track=['Wenn', u'Hätte', u'Büro', 'Hund'],
                       languages=['de'])
 
 	
